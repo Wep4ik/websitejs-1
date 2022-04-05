@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> 1 Bitcoin </h1>
+    <div id="data"></div>
+    <div id="bit"></div>
+    <button id="btn">Get Ajax Data</button>
+    <button id="btn1">Get Json Data</button>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $('#btn').click(function () {
+            $.ajax({
+                type: "GET",
+                url: "https://api.coindesk.com/v1/bpi/currentprice.json",
+                dataType: 'json',
+
+                success: function (data) {
+                    console.log(data)
+
+                    $('#data').append(`${data.time.updated}`);
+
+                    var out = `<ul>
+                    <li>EUR: ${data.bpi.EUR.rate}</li>
+                    <li>GBP: ${data.bpi.GBP.rate}</li>
+                    <li>USD: ${data.bpi.USD.rate}</li>
+                    </ul>`;
+                    $('#bit').append(out);
+                }
+            })
+        })
+
+        $(document).ready(function(){
+            console.log('dasda')
+            $('#btn1').click(function(){
+                $.getJSON(
+                    "https://api.coindesk.com/v1/bpi/currentprice.json",
+                    function(result){
+
+                        console.log(result)
+
+                        var out = `<ul>
+                    <li>EUR: ${result.bpi.EUR.rate}</li>
+                    <li>GBP: ${result.bpi.GBP.rate}</li>
+                    <li>USD: ${result.bpi.USD.rate}</li>
+                    </ul>`;
+                    
+
+                        $('#btn1').after(out)
+                    }
+                )
+            })
+        })
+    </script>
+</body>
+
+</html>
